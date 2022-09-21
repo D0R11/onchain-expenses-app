@@ -71,9 +71,9 @@ const Home: NextPage<{ api_key: string }> = ({ api_key }) => {
     label: "",
     tx_hash: "",
   });
-  const [isEditing, setIsEditing] = useState<Boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [activeRow, setActiveRow] = useState<Number | null>(null);
-  const [loading, setLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [query, setQuery] = useState<string>("");
 
   const fetchQuery = async () => {
@@ -110,9 +110,10 @@ const Home: NextPage<{ api_key: string }> = ({ api_key }) => {
 
   const updateFieldChanged =
     (index: number) => (e: React.FormEvent<HTMLInputElement>) => {
+      const target = e.target as HTMLTextAreaElement;
       setNewData({
         ...newData,
-        [e.target.name]: e.target.value,
+        [target.name]: target.value,
       });
     };
 
