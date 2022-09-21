@@ -306,7 +306,7 @@ const Home: NextPage<{ api_key: string }> = ({ api_key }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const flipside_key = `${process.env.FLIPSIDE_API_KEY}`;
   return {
     props: {
