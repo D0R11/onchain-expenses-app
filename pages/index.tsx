@@ -142,18 +142,23 @@ const Home: NextPage<{ api_key: string }> = ({ api_key }) => {
   useEffect(() => {
     async function fetchData() {
       if (query !== "") {
-        setLoading(true);
-        const result: QueryResultSet = await flipside.query.run({
-          sql: query,
-          ttlMinutes: 10,
-        });
-        const res = result?.records;
-        const final: Results[] | undefined = res?.map((row: any) => ({
-          ...row,
-          ...data.find((datum: Expenses) => datum.tx_hash === row.tx_hash),
-        }));
-        setExpenses(final);
-        setLoading(false);
+        try {
+          setLoading(true);
+          const result: QueryResultSet = await flipside.query.run({
+            sql: query,
+            ttlMinutes: 10,
+          });
+
+          const res = result?.records;
+          const final: Results[] | undefined = res?.map((row: any) => ({
+            ...row,
+            ...data.find((datum: Expenses) => datum.tx_hash === row.tx_hash),
+          }));
+          setExpenses(final);
+          setLoading(false);
+        } catch (error: any) {
+          alert(error);
+        }
       }
     }
     fetchData();
