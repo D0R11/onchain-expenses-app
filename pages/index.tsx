@@ -41,6 +41,7 @@ import {
   CheckIcon,
   CloseIcon,
   DeleteIcon,
+  DownloadIcon,
   EditIcon,
   MoonIcon,
   SunIcon,
@@ -198,7 +199,7 @@ const Home: NextPage<{ api_key: string }> = ({ api_key }) => {
                   leftIcon={<ArrowRightIcon />}
                   colorScheme="green"
                   variant="solid"
-                  disabled={isEditing}
+                  disabled={isEditing || loading}
                   isLoading={loading}
                   onClick={() => fetchQuery()}
                 >
@@ -281,7 +282,17 @@ const Home: NextPage<{ api_key: string }> = ({ api_key }) => {
         {expenses !== undefined && (
           <TableContainer>
             <Table variant="striped">
-              <TableCaption>Results</TableCaption>
+              <TableCaption>
+                <Button
+                  leftIcon={<DownloadIcon />}
+                  colorScheme="blue"
+                  variant="outline"
+                >
+                  <CSVLink data={expenses} filename="Reimbursements">
+                    Download as CSV
+                  </CSVLink>
+                </Button>
+              </TableCaption>
               <Thead>
                 <Tr>
                   <Th>Label</Th>
@@ -298,11 +309,7 @@ const Home: NextPage<{ api_key: string }> = ({ api_key }) => {
                   </Tr>
                 ))}
               </Tbody>
-              <Tfoot>
-                <Button>
-                  <CSVLink data={expenses}>Download me</CSVLink>
-                </Button>
-              </Tfoot>
+              <Tfoot></Tfoot>
             </Table>
           </TableContainer>
         )}
