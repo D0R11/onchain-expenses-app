@@ -1,4 +1,4 @@
-import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { Flipside, QueryResultSet } from "@flipsidecrypto/sdk";
 import { Expenses, Results } from "../types";
@@ -40,9 +40,15 @@ import {
 } from "@chakra-ui/icons";
 import moment from "moment";
 import axios, { AxiosResponse } from "axios";
+import { useAccount, useEnsName } from "wagmi";
+import Profile from "../components/profile";
+import { useIsMounted } from "../utils/useismounted";
 
 const Home: NextPage<{ api_key: string }> = ({ api_key }) => {
   const flipside = new Flipside(api_key, "https://node-api.flipsidecrypto.com");
+  const isMounted = useIsMounted();
+  const { address } = useAccount();
+  const { data: ensName } = useEnsName({ address });
   const [data, setData] = useState<Expenses[]>([
     {
       label: "Curation Multisig",
@@ -208,6 +214,7 @@ const Home: NextPage<{ api_key: string }> = ({ api_key }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
+  if (!isMounted) return null;
   return (
     <Flex height="100vh">
       <Head>
@@ -217,6 +224,7 @@ const Home: NextPage<{ api_key: string }> = ({ api_key }) => {
       </Head>
 
       <Container maxW="container.xl" centerContent>
+        <Profile />
         <Box padding="4" maxW="md">
           <IconButton
             icon={colorMode === "light" ? <SunIcon /> : <MoonIcon />}

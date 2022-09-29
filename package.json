@@ -15,12 +15,14 @@
     "@emotion/styled": "11",
     "@flipsidecrypto/sdk": "^1.1.0",
     "axios": "^0.27.2",
+    "ethers": "^5.7.1",
     "framer-motion": "6",
     "moment": "^2.29.4",
     "next": "12.3.0",
     "react": "18.2.0",
     "react-csv": "^2.2.2",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "wagmi": "^0.6.7"
   },
   "devDependencies": {
     "@types/node": "18.7.18",
